@@ -4,11 +4,9 @@ import random
 from jina import Document
 from werkzeug.serving import WSGIRequestHandler
 import base64
-# from cockroach import Cockroach
+from cockroach import Cockroach
 import io
 from PIL import Image
-
-from datetime import datetime
 
 from werkzeug.utils import send_file
 from werkzeug.wrappers import response
@@ -58,7 +56,6 @@ def fetchTextJina(searchText):
   res = response.json()
 
   return_array = []
-  # doc = Document(b64_string)
   for i, v in enumerate(res['data']['docs'][0]['matches']):
     doc = Document(v)
     img_name = "{name}.jpg".format(name = i)
@@ -66,36 +63,6 @@ def fetchTextJina(searchText):
     cv2.imwrite(img_name, cv2.cvtColor(doc.blob, cv2.COLOR_RGB2BGR))
   return return_array
 
-
-    
-
-  
-  # doc.convert_image_datauri_to_blob()
-  # cv2.imwrite("search.jpg", cv2.cvtColor(doc.blob, cv2.COLOR_RGB2BGR))
-  # return "search.jpg"
-
-def fetchAns(text):
-  import requests
-  headers = {
-        'Content-Type': 'application/json',
-    }
-
-  data = '{"top_k":1,"mode":"search","data":["' + text + '"]}'
-
-  response = requests.post(
-        'http://172.26.75.96:34567/search', headers=headers, data=data)
-
-  res = response.json()
-  return_text = res["data"]['docs'][0]['matches'][0]['tags']['ans']
-  return return_text
-    
-
-
-@app.route('/chat', methods = ['POST'])
-def chat():
-  response = request.get_json(silent= True, force= True)
-  # res = response.json()
-  return fetchAns(response['ask'])
 
 
 
@@ -108,36 +75,6 @@ def hola():
     return_text = fetchImageJina(image_name)
     return jsonify({'ans':return_text})
 
-@app.route('/test', methods = ['POST' , 'GET'])
-def h1ola():
-    import cv2
-    image = request.files['picture']
-    image_name = image.filename
-    image.save(os.path.join(os.getcwd(), image_name))
-    x = cv2.imread(image_name)
-#     cv2.imshow("test",x)
-#     cv2.waitKey(0)
-  
-# # closing all open windows
-#     cv2.destroyAllWindows()
-    # return "done"
-    # return_text = fetchImageJina(image_name)
-    # return jsonify({'ans':return_text})
-    with open("5.png", "rb") as image_file:
-      encoded_string = base64.b64encode(image_file.read())
-    return jsonify({'image':[str(encoded_string)]})
-
-
-
-@app.route('/send', methods= ['GET'])
-def send():
-  with open("1.jpg", "rb") as image_file:
-    encoded_string = base64.b64encode(image_file.read())
-  with open("2.jpg", "rb") as image_file:
-    encoded_string2 = base64.b64encode(image_file.read())
-  
-  x = [str(encoded_string2), str(encoded_string)]
-  return jsonify({'images':x})
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -153,13 +90,6 @@ def search():
     return_list.append(str(encoded_string))
   return jsonify({'image':return_list})
 
-
-  
-  
-  return "done"
-    
-
-
 if __name__ == '__main__':
   WSGIRequestHandler.protocol_version = "HTTP/1.1"
   app.run(host='0.0.0.0', port=12345) # This line is required to run Flask on repl.it 
@@ -167,24 +97,3 @@ if __name__ == '__main__':
 
 
 
-#Commented Code
-#1 
-#def hola():
- # x = io.BytesIO(image)
-    # # cv2.namedWindow('Image')
-    # x = cv2.imread("1.jpg")
-    # # img = Image.open('1.jpg', mode = 'r')
-    # byte_arr = io.BytesIO(image)
-    # base64.encodebytes(byte_arr.getvalue()).decode('ascii')
-      # x = cv2.imread(image_name)
-    
-
-    # print(len(encoded_string))
-    # x = [str(encoded_string2), str(encoded_string)]
-    
-    # # cv2.imshow(x, mat=)
-    # # window_name = 'image'
-    # cv2.imshow('Image', x)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-    # print(x.getvalue())
