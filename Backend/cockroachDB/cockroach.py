@@ -4,9 +4,9 @@ import functools
 import operator
 
 conn = psycopg2.connect(
-    database='Memes',
+    database='Sharks',
     user='rudransh',
-    password='ndsPv1br6pEkiFcT',
+    password='',
     sslmode='require',
     port=26257,
     host='free-tier.gcp-us-central1.cockroachlabs.cloud',
@@ -25,7 +25,7 @@ class cockroachDB():
         print("CREATING TABLE>>>>>>>>")
         with self.conn.cursor() as cur:
              cur.execute(
-            """CREATE TABLE IF NOT EXISTS Memes.tested (post_id VARCHAR(255), 
+            """CREATE TABLE IF NOT EXISTS Sharks.tested (post_id VARCHAR(255), 
             post_urls VARCHAR(255)
             );"""
         )
@@ -42,11 +42,7 @@ class cockroachDB():
         varlist = [[i[j] for i in values] for j in range(len(values[0]))]
         print(varlist) 
         print("ADDING YOUR VALUES INTO THE TABLE >>>>>>>")
-        # print(len(values, len(values[0])))
-        # values =functools.reduce(operator.iconcat, values, [])
-        # varlist = list(numpy.reshape(values, (5, 10)))
-        # varlist = [[i[j] for i in values] for j in range(len(values[0]))]
-        # varlist = values
+     
         with self.conn.cursor() as cur:
             # varlist = list(values)
             for ind, value in enumerate(varlist):
@@ -78,28 +74,3 @@ class cockroachDB():
             
 
 
-
-
-# conn.connect()
-# add_values()
-# print_balances()
-# with conn.cursor() as cur:
-#     cur.execute(
-#             """CREATE TABLE IF NOT EXISTS Memes.testing (post_id INT PRIMARY KEY, 
-#             post_urls VARCHAR(255), 
-#             post_title VARCHAR(255),
-#             post_description VARCHAR(255),
-#             post_time VARCHAR(255), 
-#             post_score INT
-#             );"""
-#         )
-#     cur.execute("""UPSERT INTO Memes.testing VALUES (1, 'sdds', 'ssss', 'ppppp', 'kkkkk', 10);""")
-#     
-
-# # conn.commit()
-# cock = cockroachDB(conn = conn)
-# cock.create_table()
-# x = [["1", "2", "3", "4", "5", "6"], ['7', '8', '9', '10', '11', '12'], ['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18'],['13', '14', '15', '16', '17', '18']]
-# print(len(x), len(x[0]))
-# cock.add_values(x)
-# print(cock.get_values(printing = True))
