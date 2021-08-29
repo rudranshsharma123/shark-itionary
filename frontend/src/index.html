@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<form class="my-form">
+    <div class="container">
+        <h1>Shark-itionary</h1>
+        <ul>
+            <li>
+                <select class="select" onchange="displayRes(this.value);">
+          <option selected disabled>-- Plese choose an option --</option>
+          <option>Seach Via text</option>
+          <option>Search Via Image</option>
+         </select>
+            </li>
+            <li>
+                <div class="grid grid-2">
+                    <input type="text" placeholder="Name"  id="textBox" style="display: none;">
+                    
+                </div>
+            </li>
+            <li>
+                <div>
+                    <p><input type="file" accept="image/* " name="image " id="file " class='test' onchange="loadFile(event) " style="display: none;"></p>
+                    
+                    <p><img id="output" width="200 " /></p>
+                </div>
+            </li>
+
+
+
+       
+            <li id='searchTickBox' style="display: none;">
+                <input type="checkbox" id="terms ">
+                <label for="terms ">I am ready to search! </label>
+            </li>
+            <li id="buttonsBottom" style="display: none;">
+                <div class="grid grid-3">
+                    <button class="btn-grid " type="submit " disabled onclick="{var textBox = document.getElementById('textBox'); if(textBox.style.display == 'block'){sendText(event);} else{sendImage(event);} }">
+            <span class="back ">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/email-icon.svg " alt=" ">
+            </span>
+            <span class="front ">SUBMIT</span>
+          </button>
+                    <button class="btn-grid " type="reset " disabled>
+            <span class="back ">
+              <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/eraser-icon.svg " alt=" ">
+            </span>
+            <span class="front ">RESET</span>
+          </button>
+                </div>
+            </li>
+            <li>
+                <div class='container'>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>
+</body>
+<footer>
+    <div class="container ">
+        <small>Made with <span>❤</span> by <a href="https://github.com/rudranshsharma123 " target="_blank ">Rudransh Sharma</a>
+    </small>
+    </div>
+</footer>
+<script src="index.js " charset="utf-8 "></script>
+
+</html>
